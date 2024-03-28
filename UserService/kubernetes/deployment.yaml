@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: UserService
+  name: UserService
+  labels:
+    app: UserService
+spec:
+  selector:
+    matchLabels:
+      app: UserService
+  template:
+    metadata:
+      labels:
+        app: UserService
+        name: UserService
+    spec:
+      containers:
+        - name: UserService
+          image: mahendraintelops/demo-prj3/UserService
+          imagePullPolicy: Always
+          ports:
+        
+          - containerPort: 4500
+            name: http
+        
+        
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+        
